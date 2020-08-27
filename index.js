@@ -12,7 +12,7 @@ const commandFiles = fs.readdirSync('./Commands').filter(file => file.endsWith('
 
 for (const file of commandFiles) {
 	let command = require(`./Commands/${file}`);
-	if(!command.name) command={...command,...require("./example-exports.json")};
+	if(!command.comp) command={...command,...require("./example-exports.json")};
 	client.commands.set(command.name, command);
 	if(command.aliases){
 	if(Array.isArray(command.aliases)){
