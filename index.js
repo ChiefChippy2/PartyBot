@@ -1,6 +1,7 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const { prefix, token, owner } = require('./config.json');
+const client=new Discord.Client()
 client.prefix=([prefix]).flat();/*Convert string to array, while preserving array nevertheless*/
 client.token=token;
 client.owner=owner;
@@ -13,12 +14,12 @@ for (const file of commandFiles) {
 	const command = require(`./Commands/${file}`);
 	client.commands.set(command.name, command);
 	if(command.aliases){
-	if(Array.isArray(command.aliases)
+	if(Array.isArray(command.aliases)){
 	 for(const al of command.aliases){
 	 client.commands.set(al,command)
 	 
-	 };
-	else client.command.set(command.aliases.toString(),command)
+	 };}
+	else client.commands.set(command.aliases.toString(),command)
 	
 	
 	
@@ -30,11 +31,13 @@ client.once('ready', () => {
 });
 
 client.on('message', async message => {
-	if (!prefix.some(p=>message.content.startsWith(p)) || message.author.bot) return;
+	if (!client.prefix.some(p=>message.content.startsWith(p)) || message.author.bot) return;
 //identify the prefix
 let cp;
-prefix.forEach(a=>if(message.content.startsWith(a)){cp=a})
-	if (!client.commands.has(message.content.slice(cp.length)).split(/ +/)[0])) return;
+client.prefix.forEach(a=>if(message.content.startsWith(a)){cp=a})
+let args=message.content.slice(cp.length).split(/ +/)
+let command=args.shift();
+	if (!client.commands.has(command)) return;
 
 	try {
 	const cmd=	client.commands.get(command)
@@ -61,7 +64,7 @@ let nc=  await message.author.send("I can't speak there... Give me right perms i
   
   }
   
-    cmd.execute(message, message.content.slice(prefix.length).split(/ +/),client);
+    cmd.execute(message, args,client);
 	} catch (error) {
 		console.error(error);
     //Technically if bot cant send dm and is muted it cant reply either.
