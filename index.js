@@ -11,7 +11,8 @@ const cd= new Discord.Collection();
 const commandFiles = fs.readdirSync('./Commands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
-	const command = require(`./Commands/${file}`);
+	let command = require(`./Commands/${file}`);
+	if(!command.name) command={...command,...require("./example-exports.json")};
 	client.commands.set(command.name, command);
 	if(command.aliases){
 	if(Array.isArray(command.aliases)){
