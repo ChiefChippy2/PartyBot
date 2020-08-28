@@ -17,7 +17,7 @@ msg.content="/help party"
 return client.emit("message",msg)}
 try{
 let subcom=pcommands.get(args[0])
-if(!subcom&&isUser(args[1])){ args.unshift("invite");subcom=pcommands.get("invite")};
+if(!subcom&&await isUser(args[1])){ args.unshift("invite");subcom=pcommands.get("invite")};
 subcom.execute(msg,args,client,Discord)
 }catch(e){ msg.reply("Something went wrong uh oh")}
 
