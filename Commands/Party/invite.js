@@ -14,10 +14,11 @@ users=users.filter(x=>x)
 let partyAdds=users.each(x=>addParty(x,party.id))
 Promise.all(partyAdds).then(suc=>{
 msg.reply("Successfully added "+suc.map(x=>x.username).slice(0,4).join(", ")+(suc.length>5?" and **"+suc.length-5+"** more people":"")+" to the party! Time to party!")
-})
+}).catch(e=>msg.reply("Error whilst adding users to party. Some or all of them might not be in the party."))
 
 
-})}
+}).catch(e=>msg.reply("Error parsing users."))
+}
 
 
 
