@@ -31,28 +31,38 @@ allow:66061568/*View Channel,Connect,Mute Members,Move Members,Speak,Deafen Memb
 let chs=await Promise.all(tasks)
 /*register party*/
 await db.set("PARTY"+owner.id,{"guild":guild.id,"channels":chs,"id":owner.id});
+  await db.set("PARTYINFO"+owner.id,{"guild":guild.id,"channels":chs,"id":owner.id,"role":"owner"});
 await chs[0].send(owner.toString()+", here is your party channel!")
 return chs
 
-}
+},
 async partyAdd(user,partyid,guild){
 const party=await db.get("PARTY"+partyid)
 if(!party) throw new Error("Party Not Found.");
+if(!await isAdmin(user,party)) throw new Error("Missing Perms.");
 /*now party is found, add user to it*/
-await Promise.all(party.channels.map(x=>guild.channels.cache.get(x)).map(x=>x.createOverwrite(user,perms.member,"Party Invite"))
+await Promise.all(party.channels.map(x=>guild.channels.cache.get(x)).map(x=>x.createOverwrite(user,perms.member,"Party Invite")))
+party.role="member";
 await db.set("PARTYINFO"+user.id,party)
 return user
 
-}
+},
 async partyKick(user,partyid,guild){
 const party=await db.get("PARTY"+partyid)
 if(!party) throw new Error("Party Not Found.");
+if(!await isAdmin(user,party)) throw new Error("Missing Perms.");
 /*now party is found, remove user from it*/
-await Promise.all(party.channels.map(x=>guild.channels.cache.get(x)).map(x=>x.updateOverwrite(user,{"VIEW_CHANNEL":false},"Party Kick"))
+await Promise.all(party.channels.map(x=>guild.channels.cache.get(x)).map(x=>x.updateOverwrite(user,{"VIEW_CHANNEL":false},"Party Kick")))
 await db.delete("PARTYINFO"+user.id)
 return user
 
-}
+},
+  async isAdmin(user,party){
+  const party=db.get("PARTYINFO"+user.id)
+  return party&&party.role!=="member";
+  
+  
+  }
 
 
 
