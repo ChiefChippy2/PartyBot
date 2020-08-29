@@ -47,10 +47,10 @@ await db.set("PARTYINFO"+user.id,party)
 return user
 
 },
-async partyKick(user,partyid,guild){
+async partyKick(user,partyid,guild,oid){
 const party=await db.get("PARTY"+partyid)
 if(!party) throw new Error("Party Not Found.");
-if(await isAdmin(user,party)) throw new Error("Missing Perms.");
+if(oid!==party.id&&await isAdmin(user,party)) throw new Error("Missing Perms.");
 /*now party is found, remove user from it*/
 await Promise.all(party.channels.map(x=>guild.channels.cache.get(x)).map(x=>x.updateOverwrite(user,{"VIEW_CHANNEL":false},"Party Kick")))
 await db.delete("PARTYINFO"+user.id)
