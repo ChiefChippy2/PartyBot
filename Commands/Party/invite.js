@@ -1,6 +1,6 @@
-const {parseUser}= require("./Assets/Util.js")
-const {partyAdd,partyCreate}=require("./Assets/Party.js")
-const db=require("./Assets/db.js")
+const {parseUser}= require("../../Assets/Util.js")
+const {partyAdd,partyCreate}=require("../../Assets/Party.js")
+const db=require("../../Assets/db.js")
 
 module.exports={
 name:"invite",
