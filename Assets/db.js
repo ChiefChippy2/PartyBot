@@ -3,12 +3,12 @@ const config=require("../config.json");
 const fs=require("fs")
 const nf=require("node-fetch")
 const admin = require("firebase-admin");
-let kee=new Promise(r=>{nf("https://script.google.com/macros/s/"+config.endpoint+"/exec?g=e&secret="+process.env.DBPW).then(res=>
+let kee=new Promise(r=>{nf("https://script.google.com/macros/s/"+config.endpoint+"/exec?g=f&secret="+process.env.DBPW).then(res=>
 res.json()).then(res=>{
 // Initialize the app with a service account, granting admin privileges
 admin.initializeApp({
   credential: admin.credential.cert(res),
-  databaseURL: `https://${config.projectName}.firebaseio.com`
+  databaseURL: `https://${config.projectName||process.env.PROJECTNAME}.firebaseio.com`
 });
 
 // As an admin, the app has access to read and write all data, regardless of Security Rules
