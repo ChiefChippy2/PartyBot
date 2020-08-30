@@ -57,7 +57,7 @@ await db.delete("PARTYINFO"+user.id)
 return user
 
 },
-  async isAdmin(user,party){
+  async isAdmin(user){
   const party=db.get("PARTYINFO"+user.id)
   return party&&party.role!=="member";
   
