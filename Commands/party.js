@@ -1,4 +1,5 @@
 const Discord=require("discord.js")
+const fs=require("fs")
 const pcommands=new Discord.Collection(fs.readdirSync(__dirname+"/Party").map(x=>{
 const p=require(__dirname+"/Party/"+x)
 return [p.name,p]
