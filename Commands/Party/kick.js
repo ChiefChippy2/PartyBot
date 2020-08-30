@@ -1,5 +1,6 @@
 const db=require("../../Assets/db.js")
-
+const {parseUser}= require("../../Assets/Util.js")
+const {partyKick}=require("../../Assets/Party.js")
 module.exports={
 name:"kick",
 aliases:["remove","r","k"],
