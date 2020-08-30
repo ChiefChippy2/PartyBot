@@ -1,5 +1,5 @@
-const db=require("./Assets/db.js")
-const perms=require("./Assets/Perms/perms.json")
+const db=require("./db.js")
+const perms=require("./Perms/perms.json")
 module.exports={
 async partyCreate(owner,guild){
 let tasks=[];
