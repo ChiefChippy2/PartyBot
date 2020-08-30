@@ -1,5 +1,5 @@
 
-const config=require("./config.json");
+const config=require("../config.json");
 const fs=require("fs")
 const nf=require("node-fetch")
 const admin = require("firebase-admin");
