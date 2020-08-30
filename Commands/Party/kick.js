@@ -1,9 +1,10 @@
-const db=require("./Assets/db.js")
+const db=require("../../Assets/db.js")
 
 module.exports={
 name:"kick",
 aliases:["remove","r","k"],
 async execute(msg,args,client,discord){
+  Promise.all(args.map(x=>parseUser(x,msg.channel))).then(async users=>{
 const pinfo=await db.get("PARTYINFO"+msg.author.id)
 if(!pinfo) return msg.reply("User not in party.");
 if(!["owner","admin"].includes(pinfo.role)) return msg.reply("You can't kick people from the party you are in because you are not the owner or an admin of the party");
