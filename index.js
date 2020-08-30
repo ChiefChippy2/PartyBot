@@ -5,7 +5,6 @@ const client=new Discord.Client()
 client.prefix=([prefix]).flat();/*Convert string to array, while preserving array nevertheless*/
 client.token=token;
 client.owner=owner;
-const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const cd= new Discord.Collection();
 const commandFiles = fs.readdirSync('./Commands').filter(file => file.endsWith('.js'));
