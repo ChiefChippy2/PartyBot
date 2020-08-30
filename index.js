@@ -34,7 +34,7 @@ client.on('message', async message => {
 	if (!client.prefix.some(p=>message.content.startsWith(p)) || message.author.bot) return;
 //identify the prefix
 let cp;
-client.prefix.forEach(a=>if(message.content.startsWith(a)){cp=a})
+client.prefix.forEach(a=>{if(message.content.startsWith(a)){cp=a}})
 let args=message.content.slice(cp.length).split(/ +/)
 let command=args.shift();
 	if (!client.commands.has(command)) return;
