@@ -5,7 +5,7 @@ const p=require(__dirname+"/Party/"+x)
 return [p.name,p]
 
 }))
-const {parseUser}=require("./Assets/Util.js")
+const {parseUser}=require("../Assets/Util.js")
 module.exports={
 "name":"party",
 "aliases":["p","z"],
