@@ -1,0 +1,25 @@
+{
+  "name": "PartyBot",
+  "version": "1.0.0",
+  "description": "Discord bot for in-guild \"parties\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChiefChippy2/PartyBot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChiefChippy2/PartyBot/issues"
+  },
+  "homepage": "https://github.com/ChiefChippy2/PartyBot#readme",
+  "dependencies": {
+    "discord.js": "^12.3.1",
+    "firebase-admin": "^9.1.1",
+    "node-fetch": "^2.6.0"
+  }
+}
