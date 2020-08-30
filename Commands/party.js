@@ -11,13 +11,13 @@ module.exports={
 "guildOnly":true,
 "description":"Party Commands",
 "syntax":"party <["+fs.readdirSync(__dirname+"/Party").sort().join("|")+"]> <[DiscordUser1]> ...[DiscordUserN]",
-"execute":(msg,args,client){
+"execute":async (msg,args,client)=>{
 if(!args[0]){ 
 msg.content="/help party"
 return client.emit("message",msg)}
 try{
 let subcom=pcommands.get(args[0])
-if(!subcom&&await isUser(args[1])){ args.unshift("invite");subcom=pcommands.get("invite")};
+if(!subcom&&await parseUser(args[1])){ args.unshift("invite");subcom=pcommands.get("invite")};
 subcom.execute(msg,args,client,Discord)
 }catch(e){ msg.reply("Something went wrong uh oh")}
 
