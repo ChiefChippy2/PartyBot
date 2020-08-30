@@ -1,4 +1,4 @@
-const Keyv = require('keyv');
+
 const config=require("./config.json");
 const fs=require("fs")
 const nf=require("node-fetch")
@@ -8,7 +8,7 @@ res.json()).then(res=>{
 // Initialize the app with a service account, granting admin privileges
 admin.initializeApp({
   credential: admin.credential.cert(res),
-  databaseURL: "https://second-grail-242007.firebaseio.com"
+  databaseURL: `https://${config.projectName}.firebaseio.com`
 });
 
 // As an admin, the app has access to read and write all data, regardless of Security Rules
