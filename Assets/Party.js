@@ -6,7 +6,7 @@ let tasks=[];
 
 /*then create the channel*/
 const prefs=await db.get("GUILDPREF"+guild.id)
-tasks.push(guild.channels.create(owner.displayName+"'s Party",{parent:prefs?prefs.partyChannel:msg.guild.id,type:"text",permissionOverwrites:[
+tasks.push(guild.channels.create(owner.displayName+"'s Party",{parent:prefs?prefs.partyChannel:undefined,type:"text",permissionOverwrites:[
 {
 id:guild.id,
 deny:["VIEW_CHANNEL"]
@@ -17,7 +17,7 @@ allow:["VIEW_CHANNEL","SEND_MESSAGES","MANAGE_MESSAGES","ADD_REACTIONS","USE_EXT
 },
 ]
 }))
-tasks.push(guild.channels.create(owner.displayName+"'s Party VC",{parent:prefs?prefs.partyChannel:msg.guild.id,type:"voice",permissionOverwrites:[
+tasks.push(guild.channels.create(owner.displayName+"'s Party VC",{parent:prefs?prefs.partyChannel:undefined,type:"voice",permissionOverwrites:[
 {
 id:guild.id,
 deny:["VIEW_CHANNEL"]

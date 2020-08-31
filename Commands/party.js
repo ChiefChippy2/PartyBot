@@ -17,10 +17,11 @@ if(!args[0]){
 msg.content="/help party"
 return client.emit("message",msg)}
 try{
+//console.log(msg)
 let subcom=pcommands.get(args[0])
 if(!subcom&&await parseUser(args[1])){ args.unshift("invite");subcom=pcommands.get("invite")};
 subcom.execute(msg,args,client,Discord)
-}catch(e){ msg.reply("Something went wrong uh oh")}
+}catch(e){console.log(e); msg.reply("Something went wrong uh oh")}
 
 }
 

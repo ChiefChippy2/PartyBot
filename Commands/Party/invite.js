@@ -5,6 +5,7 @@ const db=require("../../Assets/db.js")
 module.exports={
 name:"invite",
 execute(msg,args,client,Discord){
+console.log(msg)
 Promise.all(args.map(x=>parseUser(x,msg.channel))).then(async users=>{
 const party=await db.get("PARTYINFO"+msg.author.id);
 if(!party) await partyCreate(msg.author,msg.guild);
@@ -17,7 +18,7 @@ msg.reply("Successfully added "+suc.map(x=>x.username).slice(0,4).join(", ")+(su
 }).catch(e=>msg.reply("Error whilst adding users to party. Some or all of them might not be in the party."))
 
 
-}).catch(e=>msg.reply("Error ."))
+}).catch(e=>msg.reply("Error ."+e))
 }
 
 

@@ -2,6 +2,8 @@ const  dotenv=require("dotenv");
 const result = dotenv.config();
 const fs = require('fs');
 const Discord = require('discord.js');
+const db=require("./Assets/db.js");
+db.init();
 const { prefix, token, owner } = require('./config.json');
 const client=new Discord.Client()
 client.prefix=([prefix]).flat();/*Convert string to array, while preserving array nevertheless*/
