@@ -6,7 +6,7 @@ let tasks=[];
 
 /*then create the channel*/
 const prefs=await db.get("GUILDPREF"+guild.id)
-tasks.push(guild.channels.create(owner.displayName+"'s Party",{parent:prefs?prefs.partyChannel:undefined,type:"text",permissionOverwrites:[
+tasks.push(guild.channels.create(owner.username+"'s Party",{parent:prefs?prefs.partyChannel:undefined,type:"text",permissionOverwrites:[
 {
 id:guild.id,
 deny:["VIEW_CHANNEL"]
@@ -21,7 +21,7 @@ allow:["VIEW_CHANNEL","SEND_MESSAGES","MANAGE_MESSAGES","ADD_REACTIONS","USE_EXT
 },
 ]
 }))
-tasks.push(guild.channels.create(owner.displayName+"'s Party VC",{parent:prefs?prefs.partyChannel:undefined,type:"voice",permissionOverwrites:[
+tasks.push(guild.channels.create(owner.username+"'s Party VC",{parent:prefs?prefs.partyChannel:undefined,type:"voice",permissionOverwrites:[
 {
 id:guild.id,
 deny:["VIEW_CHANNEL"]
@@ -37,17 +37,18 @@ allow:66061568/*View Channel,Connect,Mute Members,Move Members,Speak,Deafen Memb
 ]
 }))
 let chs=await Promise.all(tasks)
+console.log("P created");
 /*register party*/
-await db.set("PARTY"+owner.id,{"guild":guild.id,"channels":chs,"id":owner.id});
-  await db.set("PARTYINFO"+owner.id,{"guild":guild.id,"channels":chs,"id":owner.id,"role":"owner"});
+await db.set("PARTY"+owner.id,{"guild":guild.id,"channels":chs.map(x=>x.id),"id":owner.id});
+  await db.set("PARTYINFO"+owner.id,{"guild":guild.id,"channels":chs.map(x=>x.id),"id":owner.id,"role":"owner"});
 await chs[0].send(owner.toString()+", here is your party channel!")
-return chs
+return await db.get("PARTYINFO"+owner.id)
 
 },
 async partyAdd(user,partyid,guild){
 const party=await db.get("PARTY"+partyid)
 if(!party) throw new Error("Party Not Found.");
-if(await isAdmin(user,party)) throw new Error("Missing Perms.");
+if(await module.exports.isAdmin(user,party)) throw new Error("Missing Perms.");
 /*now party is found, add user to it*/
 await Promise.all(party.channels.map(x=>guild.channels.cache.get(x)).map(x=>x.createOverwrite(user,perms.member,"Party Invite")))
 party.role="member";
@@ -58,7 +59,7 @@ return user
 async partyKick(user,partyid,guild,oid){
 const party=await db.get("PARTY"+partyid)
 if(!party) throw new Error("Party Not Found.");
-if(oid!==party.id&&await isAdmin(user,party)) throw new Error("Missing Perms.");
+if(oid!==party.id&&await module.exports.isAdmin(user,party)) throw new Error("Missing Perms.");
 /*now party is found, remove user from it*/
 await Promise.all(party.channels.map(x=>guild.channels.cache.get(x)).map(x=>x.updateOverwrite(user,{"VIEW_CHANNEL":false},"Party Kick")))
 await db.delete("PARTYINFO"+user.id)
@@ -67,7 +68,7 @@ return user
 },
   async isAdmin(user){
   const party=db.get("PARTYINFO"+user.id)
-  return party&&party.role!=="member";
+  return !party&&party.role!=="member";
   
   
   }
