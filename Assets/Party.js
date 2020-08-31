@@ -71,8 +71,16 @@ return user
   return !party&&party.role!=="member";
   
   
-  }
-
+  }, 
+async partyDisband(partyid,guild) {
+const party=await db.get("PARTY"+partyid)
+if(!party) throw new Error("Party Not Found.");
+//grab all users first
+await Promise.all(guild.channels.cache.get(party.channels[0]).permissionOverwrites.map(x=>db.delete("PARTYINFO"+x.id)))
+await Promise.all(party.channels.map(x=>guild.channels.cache.get(x)).map(x=>x.delete()))
+await db.delete("PARTY"+partyid)
+return partyid
+}
 
 
 
