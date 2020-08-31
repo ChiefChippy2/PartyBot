@@ -15,6 +15,10 @@ deny:["VIEW_CHANNEL"]
 id:owner,
 allow:["VIEW_CHANNEL","SEND_MESSAGES","MANAGE_MESSAGES","ADD_REACTIONS","USE_EXTERNAL_EMOJIS","EMBED_LINKS","ATTACH_FILES"]
 },
+  {
+id:guild.me.id,
+allow:["VIEW_CHANNEL","SEND_MESSAGES","MANAGE_MESSAGES","ADD_REACTIONS","USE_EXTERNAL_EMOJIS","EMBED_LINKS","ATTACH_FILES"]
+},
 ]
 }))
 tasks.push(guild.channels.create(owner.displayName+"'s Party VC",{parent:prefs?prefs.partyChannel:undefined,type:"voice",permissionOverwrites:[
@@ -24,6 +28,10 @@ deny:["VIEW_CHANNEL"]
 },
 {
 id:owner,
+allow:66061568/*View Channel,Connect,Mute Members,Move Members,Speak,Deafen Members,Use Voice Activity,Priority Speaker*/
+},
+  {
+id:guild.me.id,
 allow:66061568/*View Channel,Connect,Mute Members,Move Members,Speak,Deafen Members,Use Voice Activity,Priority Speaker*/
 },
 ]
