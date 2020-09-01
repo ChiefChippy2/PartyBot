@@ -13,7 +13,7 @@ if(users.every(x=>!x)) return msg.reply("All invalid users. PLease @mention them
 users=users.filter(x=>x)
 let partyKicks=users.each(x=>partyKick(x,party.id,msg.guild,msg.author.id))
 Promise.all(partyKicks).then(suc=>{
-if(await partyEmpty(party.id)) return partyDisband(party.id,msg.guild)
+if(await partyEmpty(party.channels[0])) return partyDisband(party.id,msg.guild)
 msg.reply("Successfully removed "+suc.map(x=>x.username).slice(0,4).join(", ")+(suc.length>5?" and **"+suc.length-5+"** more people":"")+" from the party!")
 }).catch(e=>msg.reply("Error whilst adding users to party. Some or all of them might not be in the party. Error : "+e))
 
