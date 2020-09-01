@@ -48,7 +48,7 @@ return await db.get("PARTYINFO"+owner.id)
 async partyAdd(user,partyid,guild){
 const party=await db.get("PARTY"+partyid)
 if(!party) throw new Error("Party Not Found.");
-
+if(await db.get("PARTYINFO"+user.id)) throw new Error("User in party")
 /*now party is found, add user to it*/
 await Promise.all(party.channels.map(x=>guild.channels.cache.get(x)).map(x=>x.createOverwrite(user,perms.member,"Party Invite")))
 party.role="member";
