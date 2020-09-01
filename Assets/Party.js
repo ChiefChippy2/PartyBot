@@ -80,7 +80,10 @@ await Promise.all(guild.channels.cache.get(party.channels[0]).permissionOverwrit
 await Promise.all(party.channels.map(x=>guild.channels.cache.get(x)).map(x=>x.delete()))
 await db.delete("PARTY"+partyid)
 return partyid
-}
+},
+  async partyEmpty(chan){
+    return (chan.permissionOverwrites.size===0)
+  }
 
 
 
